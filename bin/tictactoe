@@ -1,3 +1,37 @@
 #!/usr/bin/env ruby
 
 require_relative '../config/environment'
+
+def game_greeting
+    puts "Please choose one of the following:"
+    puts """
+    \t[0] 0-player game (2 computers)
+    \t[1] 1-player game (Play against the computer)
+    \t[2] 2-player game
+    """
+end
+
+puts "Welcome to Tic-Tac-Toe!"
+game_greeting
+
+
+game_type = gets.chomp
+if game_type != "0" && game_type != "1" && game_type != "2"
+    puts "That is an invalid selection."
+    game_greeting
+    game_type = gets.chomp
+end
+
+puts "You have chosen a #{game_type}-player game."
+puts "Let's play!"
+
+case game_type
+when "0"
+    game = Game.new(Players::Computer.new("X"), Players::Computer.new("O"))
+when "1"
+    game = Game.new(Players::Human.new("X"), Players::Computer.new("O"))
+else
+    game = Game.new
+end
+
+game.play
